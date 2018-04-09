@@ -1,2 +1,2 @@
-# plugin
-Plug-in de Communecter
+# Web Extension
+Web Extension de Communecter
