@@ -852,10 +852,6 @@ function form_add(ajout,poi=null){
 		var form = 
 				'<form class="col-12" data-key="bookmark" id="formValidate">'+
 					'<div class="row pt-4 pb-3">'+
-					'<div class="col-12">'+
-						'<label class="text-bold">Nom de l\'organisation : </label><br>'+
-						'<input type="text" id="nom" style="width: 100%; border-radius: 5px;" name="nom">'+
-					'</div>'+
 				    	'<div class="col-12">'+
 						'<label class="text-bold">URL principale : </label><br>'+
 						'<input type="text" id="url-tab" name="checkUrl" style="width: 100%; border-radius: 5px;" placeholder="www.example.com">'+
@@ -869,7 +865,6 @@ function form_add(ajout,poi=null){
 				      	'<div class="col-12 p-2">'+
 				        	'<label for="description" class="text-bold">DESCRIPTION</label>'+
 				      	'</div>'+
-				      
 				      	'<div class="col-12 p-2">'+
 				        	'<textarea type="text" id="description" name="description" style="width: 100%; border-radius: 5px;"></textarea>'+
 				      	'</div>'+
@@ -1198,7 +1193,8 @@ function form_add(ajout,poi=null){
 			            "shortDescription"				: $("#description").val(),
 			            "preferences[isOpenData]"		: true,
 						"preferences[isOpenEdition]"	: true,
-						"tags[]"						: $(".js-example-data-array").val()
+						"tags[]"						: $(".js-example-data-array").val(),
+						"adress{streetAaddress}"		: data.adress.road
 			        };
 
 			        console.log(params);
