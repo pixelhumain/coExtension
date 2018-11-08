@@ -56,17 +56,34 @@ function form_add(ajout,poi=null){
 		     	'</div>'+
 		      	'<div class="row">'+
 			        '<div class="col-12">'+
-			        	'<input type="hidden" id="postcode">'+
-			        	'<input type="hidden" id="city">'+
-			        	'<input type="hidden" id="country">'+
+			        	'<input type="hidden" id="postalCode">'+
+			        	'<input type="hidden" id="latitude">'+
+			        	'<input type="hidden" id="longitude">'+
+			        	'<input type="hidden" id="countryCode">'+
+			        	'<input type="hidden" id="level1">'+
+			        	'<input type="hidden" id="level1Name">'+
+			        	'<input type="hidden" id="level3">'+
+			        	'<input type="hidden" id="level3Name">'+
+			        	'<input type="hidden" id="level4">'+
+			        	'<input type="hidden" id="level4Name">'+
+			        	'<input type="hidden" id="adressLocality">'+
+			        	'<input type="hidden" id="localityId">'+
+			        	'<input type="hidden" id="streetAdress">'+
+			        	'<input type="hidden" id="houseNumber">'+
 						'<div class="ui-widget">'+
-			    			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-							'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px;"">'+
+							'<select id="country2">'+
+							'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+							'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+							'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+							'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+							'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
 							'<a class="btn btn-success ml-3" id="search">Search</a>'+
+							'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
 			   			'</div>'+
 			        '</div>'+
 				    '<div class="col-12 text-left"><br>'+
 				        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+				        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
 				    '</div>'+
 				    '<br>'+
 				    '<div class="col-12 text-left pb-2" id="rss"><br>'+
@@ -169,19 +186,44 @@ function form_add(ajout,poi=null){
 							        '</div>'+
 							        '<div class="row">'+
 								        '<div class="col-12">'+
-								        	'<input type="hidden" id="postcode">'+
-								        	'<input type="hidden" id="city">'+
-								        	'<input type="hidden" id="country">'+
+								        	'<input type="hidden" id="postalCode">'+
+								        	'<input type="hidden" id="latitude">'+
+								        	'<input type="hidden" id="longitude">'+
+								        	'<input type="hidden" id="countryCode">'+
+								        	'<input type="hidden" id="level1">'+
+								        	'<input type="hidden" id="level1Name">'+
+								        	'<input type="hidden" id="level3">'+
+								        	'<input type="hidden" id="level3Name">'+
+								        	'<input type="hidden" id="level4">'+
+								        	'<input type="hidden" id="level4Name">'+
+								        	'<input type="hidden" id="adressLocality">'+
+								        	'<input type="hidden" id="localityId">'+
+								        	'<input type="hidden" id="streetAdress">'+
+								        	'<input type="hidden" id="houseNumber">'+
 											'<div class="ui-widget">'+
-					                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-					                			'<input id="adress" name="adress" style ="width: 75%"">'+
-					                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-					               			'</div>'+
-					               			'<br>'+
+												'<select id="country2">'+
+												'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+												'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+												'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+												'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+												'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+												'<a class="btn btn-success ml-3" id="search">Search</a>'+
+												'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+								   			'</div>'+
 								        '</div>'+
-								         '<div class="col-12 text-left"><br>'+
-								            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
-								          '</div>'+
+									    '<div class="col-12 text-left"><br>'+
+									        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+									        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+									    '</div>'+
+									    '<br>'+
+									    '<div class="col-12">'+
+											'<label class="text-bold">email : </label><br>'+
+											'<input type="text" id="mail" name="mail" style="width: 100%; border-radius: 5px;" placeholder="example@mail.com">'+
+										'</div>'+
+										'<div class="col-12">'+
+											'<label class="text-bold">URL principale : </label><br>'+
+											'<input type="text" id="url-tab" name="checkUrl" style="width: 100%; border-radius: 5px;" placeholder="www.example.com">'+
+										'</div>'+
 									'<div class="col-12 text-center pb-2"><br>'+
 								        '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
 								    '</div>'+
@@ -220,20 +262,44 @@ function form_add(ajout,poi=null){
 						        '</div>'+
 						        '<div class="row">'+
 							        '<div class="col-12">'+
-							        	'<input type="hidden" id="postcode">'+
-							        	'<input type="hidden" id="city">'+
-							        	'<input type="hidden" id="country">'+
+							        	'<input type="hidden" id="postalCode">'+
+							        	'<input type="hidden" id="latitude">'+
+							        	'<input type="hidden" id="longitude">'+
+							        	'<input type="hidden" id="countryCode">'+
+							        	'<input type="hidden" id="level1">'+
+							        	'<input type="hidden" id="level1Name">'+
+							        	'<input type="hidden" id="level3">'+
+							        	'<input type="hidden" id="level3Name">'+
+							        	'<input type="hidden" id="level4">'+
+							        	'<input type="hidden" id="level4Name">'+
+							        	'<input type="hidden" id="adressLocality">'+
+							        	'<input type="hidden" id="localityId">'+
+							        	'<input type="hidden" id="streetAdress">'+
+							        	'<input type="hidden" id="houseNumber">'+
 										'<div class="ui-widget">'+
-				                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-				                			'<input id="adress" name="adress" style ="width: 75%"">'+
-				                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-				               			'</div>'+
-				               			'<br>'+
+											'<select id="country2">'+
+											'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+											'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+											'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+											'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+											'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+											'<a class="btn btn-success ml-3" id="search">Search</a>'+
+											'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+							   			'</div>'+
 							        '</div>'+
-							        '<div class="col-12 text-left"><br>'+
-							            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
-							        '</div>'+
-							    '</div>'+
+								    '<div class="col-12 text-left"><br>'+
+								        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+								        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+								    '</div>'+
+								    '<br>'+
+								    '<div class="col-12">'+
+										'<label class="text-bold">email : </label><br>'+
+										'<input type="text" id="mail" name="mail" style="width: 100%; border-radius: 5px;" placeholder="example@mail.com">'+
+									'</div>'+
+									'<div class="col-12">'+
+										'<label class="text-bold">URL principale : </label><br>'+
+										'<input type="text" id="url-tab" name="checkUrl" style="width: 100%; border-radius: 5px;" placeholder="www.example.com">'+
+									'</div>'+
 								'<div class="col-12 text-center pb-2"><br>'+
 							        '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
 							    '</div>'+
@@ -439,23 +505,40 @@ function form_add(ajout,poi=null){
 			        	'</div>'+
 				        '<div class="row">'+
 					        '<div class="col-12">'+
-					        	'<input type="hidden" id="postcode">'+
-					        	'<input type="hidden" id="city">'+
-					        	'<input type="hidden" id="country">'+
+					        	'<input type="hidden" id="postalCode">'+
+					        	'<input type="hidden" id="latitude">'+
+					        	'<input type="hidden" id="longitude">'+
+					        	'<input type="hidden" id="countryCode">'+
+					        	'<input type="hidden" id="level1">'+
+					        	'<input type="hidden" id="level1Name">'+
+					        	'<input type="hidden" id="level3">'+
+					        	'<input type="hidden" id="level3Name">'+
+					        	'<input type="hidden" id="level4">'+
+					        	'<input type="hidden" id="level4Name">'+
+					        	'<input type="hidden" id="adressLocality">'+
+					        	'<input type="hidden" id="localityId">'+
+					        	'<input type="hidden" id="streetAdress">'+
+					        	'<input type="hidden" id="houseNumber">'+
 								'<div class="ui-widget">'+
-		                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-		                			'<input id="adress" name="adress" style ="width: 75%"">'+
-		                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-		               			'</div>'+
+									'<select id="country2">'+
+									'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+									'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+									'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+									'<a class="btn btn-success ml-3" id="search">Search</a>'+
+									'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+					   			'</div>'+
 					        '</div>'+
-					        '<div class="col-12 text-left"><br>'+
-					            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+						    '<div class="col-12 text-left"><br>'+
+						        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+						        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+						    '</div>'+
+						    '<br>'+
+					        '<div class="col-12 text-center pb-2"><br>'+
+					          '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
 					        '</div>'+
-					    '</div>'+
-				        '<div class="col-12 text-center pb-2"><br>'+
-				          '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
-				        '</div>'+
-				        '<br>'+
+				        	'<br>'+
 				      '</div>'+
 			     	'</div>'
 			    '</div>'
@@ -551,24 +634,40 @@ function form_add(ajout,poi=null){
 				        '</div>'+
 				        '<div class="row">'+
 					        '<div class="col-12">'+
-					        	'<input type="hidden" id="postcode">'+
-					        	'<input type="hidden" id="city">'+
-					        	'<input type="hidden" id="country">'+
+					        	'<input type="hidden" id="postalCode">'+
+					        	'<input type="hidden" id="latitude">'+
+					        	'<input type="hidden" id="longitude">'+
+					        	'<input type="hidden" id="countryCode">'+
+					        	'<input type="hidden" id="level1">'+
+					        	'<input type="hidden" id="level1Name">'+
+					        	'<input type="hidden" id="level3">'+
+					        	'<input type="hidden" id="level3Name">'+
+					        	'<input type="hidden" id="level4">'+
+					        	'<input type="hidden" id="level4Name">'+
+					        	'<input type="hidden" id="adressLocality">'+
+					        	'<input type="hidden" id="localityId">'+
+					        	'<input type="hidden" id="streetAdress">'+
+					        	'<input type="hidden" id="houseNumber">'+
 								'<div class="ui-widget">'+
-		                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-		                			'<input id="adress" name="adress" style ="width: 75%">'+
-		                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-		               			'</div>'+
-		               			'<br>'+
+									'<select id="country2">'+
+									'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+									'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+									'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+									'<a class="btn btn-success ml-3" id="search">Search</a>'+
+									'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+					   			'</div>'+
 					        '</div>'+
-					        '<div class="col-12 text-left"><br>'+
-					            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+						    '<div class="col-12 text-left"><br>'+
+						        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+						        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+						    '</div>'+
+						    '<br>'+
+					        '<div class="col-12 text-center pb-2"><br>'+
+					          '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
 					        '</div>'+
-					    '</div>'+
-				        '<div class="col-12 text-center pb-2"><br>'+
-				          '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
-				        '</div>'+
-				        '<br>'+
+					        '<br>'+
 				      '</div>'+
 			     	'</div>'
 			    '</div>'
@@ -816,23 +915,39 @@ function form_add(ajout,poi=null){
 					         	'</div>'+
 					         	'<div class="row">'+
 							        '<div class="col-12">'+
-							        	'<input type="hidden" id="postcode">'+
-							        	'<input type="hidden" id="city">'+
-							        	'<input type="hidden" id="country">'+
+							        	'<input type="hidden" id="postalCode">'+
+							        	'<input type="hidden" id="latitude">'+
+							        	'<input type="hidden" id="longitude">'+
+							        	'<input type="hidden" id="countryCode">'+
+							        	'<input type="hidden" id="level1">'+
+							        	'<input type="hidden" id="level1Name">'+
+							        	'<input type="hidden" id="level3">'+
+							        	'<input type="hidden" id="level3Name">'+
+							        	'<input type="hidden" id="level4">'+
+							        	'<input type="hidden" id="level4Name">'+
+							        	'<input type="hidden" id="adressLocality">'+
+							        	'<input type="hidden" id="localityId">'+
+							        	'<input type="hidden" id="streetAdress">'+
+							        	'<input type="hidden" id="houseNumber">'+
 										'<div class="ui-widget">'+
-				                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-				                			'<input id="adress" name="adress" style ="width: 75%">'+
-				                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-				               			'</div>'+
-				               			'<br>'+
+											'<select id="country2">'+
+											'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+											'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+											'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+											'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+											'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+											'<a class="btn btn-success ml-3" id="search">Search</a>'+
+											'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+							   			'</div>'+
 							        '</div>'+
-							        '<div class="col-12 text-left"><br>'+
-							            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
-							        '</div>'+
-							    '</div>'+
-						      	'<div class="col-12 pt-4 text-center">'+
-					            '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
-					          	'</div>'+	
+								    '<div class="col-12 text-left"><br>'+
+								        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+								        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+								    '</div>'+
+								    '<br>'+
+						      		'<div class="col-12 pt-4 text-center">'+
+					            		'<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
+					          		'</div>'+	
 							'</div>'+
 						'</div>'+
 					'</div>'+
@@ -883,23 +998,39 @@ function form_add(ajout,poi=null){
 			         	'</div>'+
 			         	'<div class="row">'+
 					        '<div class="col-12">'+
-					        	'<input type="hidden" id="postcode">'+
-					        	'<input type="hidden" id="city">'+
-					        	'<input type="hidden" id="country">'+
+					        	'<input type="hidden" id="postalCode">'+
+					        	'<input type="hidden" id="latitude">'+
+					        	'<input type="hidden" id="longitude">'+
+					        	'<input type="hidden" id="countryCode">'+
+					        	'<input type="hidden" id="level1">'+
+					        	'<input type="hidden" id="level1Name">'+
+					        	'<input type="hidden" id="level3">'+
+					        	'<input type="hidden" id="level3Name">'+
+					        	'<input type="hidden" id="level4">'+
+					        	'<input type="hidden" id="level4Name">'+
+					        	'<input type="hidden" id="adressLocality">'+
+					        	'<input type="hidden" id="localityId">'+
+					        	'<input type="hidden" id="streetAdress">'+
+					        	'<input type="hidden" id="houseNumber">'+
 								'<div class="ui-widget">'+
-		                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-		                			'<input id="adress" name="adress" style ="width: 75%">'+
-		                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-		               			'</div>'+
-		               			'<br>'+
+									'<select id="country2">'+
+									'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+									'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+									'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+									'<a class="btn btn-success ml-3" id="search">Search</a>'+
+									'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+					   			'</div>'+
 					        '</div>'+
-					        '<div class="col-12 text-left"><br>'+
-					            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
-					        '</div>'+
-					    '</div>'+
-				      	'<div class="col-12 pt-4 text-center">'+
-			            '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
-			          	'</div>'+	
+						    '<div class="col-12 text-left"><br>'+
+						        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+						        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+						    '</div>'+
+						    '<br>'+
+					      	'<div class="col-12 pt-4 text-center">'+
+				            '	<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
+				          	'</div>'+	
 					'</div>'+
 				'</div>'+
 			'</div>'+
@@ -949,20 +1080,36 @@ function form_add(ajout,poi=null){
 			         	'</div>'+
 			         	'<div class="row">'+
 					        '<div class="col-12">'+
-					        	'<input type="hidden" id="postcode">'+
-					        	'<input type="hidden" id="city">'+
-					        	'<input type="hidden" id="country">'+
+					        	'<input type="hidden" id="postalCode">'+
+					        	'<input type="hidden" id="latitude">'+
+					        	'<input type="hidden" id="longitude">'+
+					        	'<input type="hidden" id="countryCode">'+
+					        	'<input type="hidden" id="level1">'+
+					        	'<input type="hidden" id="level1Name">'+
+					        	'<input type="hidden" id="level3">'+
+					        	'<input type="hidden" id="level3Name">'+
+					        	'<input type="hidden" id="level4">'+
+					        	'<input type="hidden" id="level4Name">'+
+					        	'<input type="hidden" id="adressLocality">'+
+					        	'<input type="hidden" id="localityId">'+
+					        	'<input type="hidden" id="streetAdress">'+
+					        	'<input type="hidden" id="houseNumber">'+
 								'<div class="ui-widget">'+
-		                			'<label for="tags" class="text-bold">Adresse : </label><br>'+
-		                			'<input id="adress" name="adress" style ="width: 75%"">'+
-		                			'<a class="btn btn-success ml-3" id="search">Search</a>'+
-		               			'</div>'+
-		               			'<br>'+
+									'<select id="country2">'+
+									'<label for="tags" class="text-bold" >Adresse : </label><br>'+
+									'<input id="adress" name="adress" style ="width: 75%; border-radius: 5px; display:none"" placeholder="Nom de la ville">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin" style="font-size:24px"></i>'+
+									'<input id="street" style ="width: 75%; border-radius: 5px; display:none" name="adress" placeholder="(N° rue + Adresse)">'+
+									'<i class="fa fa-spinner fa-spin" style="display:none" id="spin2" style="font-size:24px"></i>'+
+									'<a class="btn btn-success ml-3" id="search">Search</a>'+
+									'<a class="btn btn-success ml-3" style="display:none" id="search2">Search</a>'+
+					   			'</div>'+
 					        '</div>'+
-					        '<div class="col-12 text-left"><br>'+
-					            '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
-					        '</div>'+
-					    '</div>'+
+						    '<div class="col-12 text-left"><br>'+
+						        '<a class="btn btn-primary color-white" id="ConfirmAdress">Confirmer l\'adresse</a>'+
+						        '<a class="btn btn-primary color-white" style="display:none" id="ConfirmAdress2">Confirmer la rue</a>'+
+						    '</div>'+
+						    '<br>'+
 				      	'<div class="col-12 pt-4 text-center">'+
 			            '<a class="btn btn-danger color-white" id="save">Save to   <img src="../icons/logo-min.png" height="25px"></a>'+
 			          '</div>'+	
@@ -1194,7 +1341,22 @@ function form_add(ajout,poi=null){
 			            "preferences[isOpenData]"		: true,
 						"preferences[isOpenEdition]"	: true,
 						"tags[]"						: $(".js-example-data-array").val(),
-						"adress{streetAaddress}"		: data.adress.road
+						"address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 			        };
 
 			        console.log(params);
@@ -1203,13 +1365,31 @@ function form_add(ajout,poi=null){
 						"name"							: $("#nom").val(),
 			            "key" 							: key,
 			            "collection" 					: 'projects',
+			            "email"							: $('#mail').val(),
+			            "url"  							: $( "#url-tab" ).val(),
 			            "shortDescription"				: $("#description").val(),
 			            "preferences[isOpenData]"		: true,
 						"preferences[isOpenEdition]"	: true,
 						"tags[]"						: $(".js-example-data-array").val(),
 						"parentId"						: userId,
-			            "parentType"					: "citoyens"
-			        };
+			            "parentType"					: "citoyens",
+			            "address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
+					};
 
 			        console.log(params);
 
@@ -1226,10 +1406,28 @@ function form_add(ajout,poi=null){
 						"allDay"						: $("input:checked").val(),
 			            "key" 							: key,
 			            "collection" 					: 'events',
+			            "email"							: $('#mail').val(),
+			            "url"  							: $( "#url-tab" ).val(),
 			            "shortDescription"				: $("#shortDescription").val(),
 			            "preferences[isOpenData]"		: true,
 						"preferences[isOpenEdition]"	: true,
 						"tags[]"						: $(".js-example-data-array").val(),
+						"address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 			        };
 
 			        console.log(params);
@@ -1239,7 +1437,7 @@ function form_add(ajout,poi=null){
 
 					var params = {
 			            "section" 			: $('#type').val(),
-			            "type" 				: $('#role').val() || $('#subZ').val(),
+			            "category" 				: $('#role').val() || $('#subZ').val(),
 			            "subtype"  			: $('#subU').val() || $('#subD').val() || $('#subT').val() || $('#subQ').val() || $('#subC').val() || $('#subS').val(),
 						"name"				: $( "#name" ).val(),
 			            "description"		: $("#description").val(),
@@ -1247,10 +1445,29 @@ function form_add(ajout,poi=null){
 			            "devise"			: $('#devise').val(),
 			            "contactInfo"		: $('#contactInfo').val(),
 			            "tags[]"			: $(".js-example-data-array").val(),
+			            "tags[]"			: $('#type').val(),
+			            "tags[]"			: $('#subU').val() || $('#subD').val() || $('#subT').val() || $('#subQ').val() || $('#subC').val() || $('#subS').val(),
 			            "parentId"			: userId,
 			            "parentType"		: "citoyens",
 			            "key"				: key,
-			            "collection"		: "classified"
+			            "type"				: "classifieds",
+			            "collection"		: "classifieds",
+			            "address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 
 			            // }
 			        };
@@ -1271,7 +1488,25 @@ function form_add(ajout,poi=null){
 			            "parentId"			: userId,
 			            "parentType"		: "citoyens",
 			            "key"				: key,
-			            "collection"		: "ressources"
+			            "collection"		: "ressources",
+			            "email"							: $('#mail').val(),
+			            "url"  							: $( "#url-tab" ).val(),
+			            "address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 
 			            // }
 			        };
@@ -1286,11 +1521,29 @@ function form_add(ajout,poi=null){
 						"name"				: $("#title-tab").val(),
 			            "key" 				: key,
 			            "collection" 		: 'bookmarks',
-			            "url"  				: $( "#url-tab" ).attr('href'),
+			            "email"							: $('#mail').val(),
+			            "url"  							: $( "#url-tab" ).val(),
+			            // "url"  				: $( "#url-tab" ).attr('href'),
 			            "description"		: $("#description").val(),
 			            "tags[]"			: $(".js-example-data-array").val(),
 			            "parentId"			: userId,
-			            "parentType"		: "citoyens"
+			            "parentType"		: "citoyens",
+			            "address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 			            // }
 			        };
 
@@ -1305,12 +1558,30 @@ function form_add(ajout,poi=null){
 						"name"				: $("#title-tab").val(),
 			            "key" 				: key,
 			            "collection" 		: 'bookmarks',
+			            "email"							: $('#mail').val(),
+			            // "url"  							: $( "#url-tab" ).val(),
 			            "url"  				: $( "#urlRss" ).val(),
 			            "description"		: $("#description").val(),
 			            "tags[]"			: $(".js-example-data-array").val(),
 			            "parentId"			: userId,
 			            "parentType"		: "citoyens",
-			            "typeElement"		: "rss"
+			            "typeElement"		: "rss",
+			            "address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 			         // };
 			    };
 
@@ -1324,10 +1595,28 @@ function form_add(ajout,poi=null){
 					var params = {
 						'name'			: $("#title-tab").val(),
 						'description'	: $("#description").val(),
+						"email"							: $('#mail').val(),
+			            // "url"  							: $( "#url-tab" ).val(),
 						'urls[]'		: $( "#url-tab" ).attr('href'),
 			            "tags[]"		: $(".js-example-data-array").val(),
 						'key'			: 'poi',
-						'collection'	: 'poi'
+						'collection'	: 'poi',
+						"address[@type]"				: "PostalAddress",
+						"address[localityId]"			: $('#localityId').val(),
+						"address[addressCountry]"		: $("#countryCode").val(),
+						"address[addressLocality]"		: $("#adressLocality").val(),
+						"address[level1]"				: $("#level1").val(),
+						"address[level1Name]"			: $('#level1Name').val(),
+						"address[streetAdress]"			: $('#streetAdress').val(),
+						"address[houseNumber]"			: $('#houseNumber').val(),
+						"address[level4]"				: $('#level4').val(),
+						"address[level4Name]"			: $('#level4Name').val(),
+						"address[level3]"				: $('#level3').val(),
+						"address[level3Name]"			: $('#level3Name').val(),
+						"address[postalCode]"			: $('#postalCode').val(),
+						"geo[@type]"					: "GeoCoordinates",
+						"geo[latitude]"					: $('#latitude').val(),
+						"geo[longitude]"				: $('#longitude').val(),
 			        };
 			       	if (key == 'tool') {
 						params ['type']='tool';

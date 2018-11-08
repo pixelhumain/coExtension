@@ -160,94 +160,438 @@ function evenement(){
 	/*****************													************************
 		**************		DEBUT DE LA PARTIE RECHERCHE D'ADRESSE		************************
 	******************													***********************/
-  $("#search").click(function(){
-    var location = $("#adress").val();
-    console.log(location);
-    var geocode = 'https://nominatim.openstreetmap.org/search.php?format=json&q=' + location;
 
-    $.getJSON(geocode, function(data) {
-        // get lat + lon from first match
-        //var latlng = [data[1].lat, data[1].lon];
-        //console.log(latlng);
-        var city = [];
-        $.each(data,function(i,v){
-          city.push(v.display_name);
-        });
-        console.log(city);
-        //console.log(ville);
 
-      // let's stringify it
-     // var latlngAsString = latlng.join(',');
-      //console.log(latlngAsString);
 
-      // the full results JSON
-      //console.log(data);
-      buildautoComplete(city);
-      $("#adress").focus();
-    });
-  });
+$.ajax({
+  		method: "POST",
+  		url: "http://127.0.0.1/ph/co2/opendata/getcountries",
+		dataType:"json"
+	})
+  	.done(function( data ) {
+  		var str = "<select>";
+		str +="<option value='0'> Choisissez un pays</option>";
+  		$.each(data, function(i,v){
+  			str +="<option id='str' value="+v.countryCode+">"+v.name+"</option>";
+  			$("#country2").click(function(){
+  				$("#countryCode").attr("value", $('#country2 option:selected').val());
+  				$("#adress").show();
+  			});
+  			// if ($('#str').change(v.name)) {
+  			// 	$("#countryCode").attr("value", $("#str").val());
+  			// }
+  		});
+  		str +="</select>";
+  		$("#country2").html(str);
 
-  $( "#adress" ).keypress(function( event ) {
-	  if ( event.which == 13 ) {
-	    var location = $("#adress").val();
-	    console.log(location);
-	    var geocode = 'https://nominatim.openstreetmap.org/search.php?format=json&q=' + location+'&addressdetails=1';
+		$("#search").click(function(){
+		    var location = $('#street').val();
+		    $('#spin').show();
+		    console.log("location : ", location);
+		    
+		    var geocode = 'https://nominatim.openstreetmap.org/search.php?format=json&q=' + location+'&addressdetails=1';
 
-	    $.getJSON(geocode, function(data) {
-	        // get lat + lon from first match
-	        //var latlng = [data[1].lat, data[1].lon];
-	        //console.log(latlng);
-	        var city = [];
-	        console.log(data);
-	        $.each(data,function(i,v){
-	          city.push({
-	          				'value': v.display_name, 
-	          				'postcode' : v.address.postcode,
-	          				'city' : v.address.city,
-	          				'country': v.address.country
-	          			});
-	          /*console.log(v.address.city);
-	          console.log(v.address.country);
-	          console.log(v.address.postcode);*/
-	        });
-	        console.log(city);
-	        //console.log(ville);
+		    var geocode2 = 'http://api-adresse.data.gouv.fr/search/?q='+location;
 
-	      // let's stringify it
-	     // var latlngAsString = latlng.join(',');
-	      //console.log(latlngAsString);
+		    var geocode3 = 'http://127.0.0.1/co2/city/autocompletemultiscope';
 
-	      // the full results JSON
-	      //console.log(data);
-	      buildautoComplete(city);
-	      $("#adress").focus();
-	    });
-	   }
-  });
 
-  $("#ConfirmAdress").click(function(){
+		    $.ajax({
+		  		method: "POST",
+		  		url: 'http://127.0.0.1/co2/city/autocompletemultiscope',
+				data: {
+				    type: "locality",
+					scopeValue: $("#adress").val(),
+					geoShape: true,
+					formInMap: true,
+					countryCode: $('#countryCode').val(),	
+				},
+				dataType: "json",
 
-  	adress = {
-  			'postalCode' : $("#postcode").text(),
-  			'cityName' : $("#city").text(),
-  			'country' : $("#country").text()
-  		  	};
+				success: function(data){
+					$('#spin').hide();
+		   		 	console.log("data : ", data);
+		   		 	var city = [];
+		   		 	// for(var i= 0; i < data.cities.postalCodes; i++){
 
-  	console.log(adress);
+		   		 	// for(var i= 0; i < data.features.length; i++){
+			 		console.log("data.cities.length : ", data.cities);
 
-  	$.ajax({
-  			type: "POST",
-			url : 'http://127.0.0.1/ph/co2/city/citieszones', // La ressource ciblée
-			data: adress,
-			dataType: 'json',
-	      	success: function(data){
-	   		 	console.log(data);
-	      	},
-	      	error: function(){
-	      		console.log('pas de concordance');
-	      	}
-	    });
-  });
+				 		// $.each(data.features[i],function(i,v){
+		   		 	$.each(data.cities, function(i,v){
+		   		 		// alert('test');
+		   		 		for(var i= 0; i < v.postalCodes.length; i++){
+		   		 			// alert(v.postalCodes.length);
+			   		 		city.push({
+			   		 			'value' : v.postalCodes[i].name+', '+v.postalCodes[i].postalCode,
+			   		 			'postalCode' : v.postalCodes[i].postalCode,
+			   		 			'country' : v.postalCodes[i].name,
+			   		 			'latitude' : v.postalCodes[i].geo.latitude,
+			   		 			'longitude' : v.postalCodes[i].geo.latitude,
+			   		 			'localityId' : v._id.$id,
+			   		 			'level1' : v.level1,
+			   		 			'level1Name' : v.level1Name,
+			   		 			'level3' : v.level3,
+			   		 			'level3Name' : v.level3Name,
+			   		 			'level4' : v.level4,
+			   		 			'level4Name' : v.level4Name,
+			   		 			'id' : v._id.$id,
+
+			   		 		});
+				   		 	buildautoComplete(city);
+						  	$("#adress").focus();
+			   		 		console.log("city : ", city);
+			   		 		$("#ConfirmAdress").click(function(){
+			   		 			for(var i = 0; i < city.length; i++){
+									// console.log("city.length", city.length);
+							 		console.log("cityy", city[i].value);
+							 		console.log("street.val : ", $("#adress").val());
+							 		if ($("#adress").val() == city[i].value) {
+							 			// alert(city[i].value);
+							 			$("#level1").attr('value', city[i].level1);
+						   		 		$("#level1Name").attr('value', city[i].level1Name);
+						   		 		$("#level3").attr('value', city[i].level3);
+						   		 		$("#level3Name").attr('value', city[i].level3Name);
+						   		 		$("#level4").attr('value', city[i].level4);
+						   		 		$("#level4Name").attr('value', city[i].level4Name);
+						   		 		$('#localityId').attr('value', city[i].id);
+							 			$("#adressLocality").attr('value', city[i].country);
+										$("#postalCode").attr('value', city[i].postalCode);
+										$("#street").show();
+										$("#search").hide();
+										$("#search2").show();
+										$("#ConfirmAdress").hide();
+										$("#ConfirmAdress2").show();
+										// alert("L'adresse est valide");
+									}
+								};
+							});
+			   		 	};
+		   			});
+		   		},
+		  	});
+		});
+
+
+		$( "#adress" ).keypress(function( event ) {
+			if ( event.which == 13 ) {
+			    // var location = $("#adress").val();
+			    var location = $('#street').val();
+			    $('#spin').show();
+			    console.log("location : ", location);
+			    
+			    var geocode = 'https://nominatim.openstreetmap.org/search.php?format=json&q=' + location+'&addressdetails=1';
+
+			    var geocode2 = 'http://api-adresse.data.gouv.fr/search/?q='+location;
+
+			    var geocode3 = 'http://127.0.0.1/co2/city/autocompletemultiscope';
+
+
+			    $.ajax({
+			  		method: "POST",
+			  		url: 'http://127.0.0.1/co2/city/autocompletemultiscope',
+					data: {
+					    type: "locality",
+						scopeValue: $("#adress").val(),
+						geoShape: true,
+						formInMap: true,
+						countryCode: $('#countryCode').val(),	
+					},
+					dataType: "json",
+
+					success: function(data){
+						$('#spin').hide();
+			   		 	console.log("data : ", data);
+			   		 	var city = [];
+			   		 	// for(var i= 0; i < data.cities.postalCodes; i++){
+
+			   		 	// for(var i= 0; i < data.features.length; i++){
+		   		 		console.log("data.cities.length : ", data.cities);
+
+			   		 		// $.each(data.features[i],function(i,v){
+			   		 	$.each(data.cities, function(i,v){
+			   		 		// alert('test');
+			   		 		for(var i= 0; i < v.postalCodes.length; i++){
+			   		 			// alert(v.postalCodes.length);
+				   		 		city.push({
+				   		 			'value' : v.postalCodes[i].name+', '+v.postalCodes[i].postalCode,
+				   		 			'postalCode' : v.postalCodes[i].postalCode,
+				   		 			'country' : v.postalCodes[i].name,
+				   		 			'latitude' : v.postalCodes[i].geo.latitude,
+				   		 			'longitude' : v.postalCodes[i].geo.latitude,
+				   		 			'localityId' : v._id.$id,
+				   		 			'level1' : v.level1,
+				   		 			'level1Name' : v.level1Name,
+				   		 			'level3' : v.level3,
+				   		 			'level3Name' : v.level3Name,
+				   		 			'level4' : v.level4,
+				   		 			'level4Name' : v.level4Name,
+				   		 			'id' : v._id.$id,
+
+				   		 		});
+					   		 	buildautoComplete(city);
+							  	$("#adress").focus();
+				   		 		console.log("city : ", city);
+				   		 		$("#ConfirmAdress").click(function(){
+				   		 			for(var i = 0; i < city.length; i++){
+										// console.log("city.length", city.length);
+								 		console.log("cityy", city[i].value);
+								 		console.log("street.val : ", $("#adress").val());
+								 		if ($("#adress").val() == city[i].value) {
+								 			// alert(city[i].value);
+								 			$("#level1").attr('value', city[i].level1);
+							   		 		$("#level1Name").attr('value', city[i].level1Name);
+							   		 		$("#level3").attr('value', city[i].level3);
+							   		 		$("#level3Name").attr('value', city[i].level3Name);
+							   		 		$("#level4").attr('value', city[i].level4);
+							   		 		$("#level4Name").attr('value', city[i].level4Name);
+							   		 		$('#localityId').attr('value', city[i].id);
+								 			$("#adressLocality").attr('value', city[i].country);
+											$("#postalCode").attr('value', city[i].postalCode);
+											$("#street").show();
+											$("#search").hide();
+											$("#search2").show();
+											$("#ConfirmAdress").hide();
+											$("#ConfirmAdress2").show();
+											// alert("L'adresse est valide");
+										}
+									};
+								});
+				   		 	};
+				   		});
+			   		 	
+				   		 // };
+
+			      	},
+				});
+			};
+		});
+		$("#search2").click(function(){
+			var location = $("#street").val();
+		    $('#spin2').show();
+		    console.log(location);
+		    var geocode = 'https://nominatim.openstreetmap.org/search.php?format=json&q=' + location+'&addressdetails=1';
+		    var geocode2 = 'http://api-adresse.data.gouv.fr/search/?q='+location;
+
+			    // lon:55.4399386
+			    // lat:-21.2645981
+
+		    if ($("#countryCode").val() == "FR"||"RE"||"GP"||"GF"||"MQ"||"YT"||"NC"||"PM") {
+			    	// alert($("#countryCode").val());
+			    
+			    $.getJSON(geocode2, function(data) {
+				        // get lat + lon from first match
+				        //var latlng = [data[1].lat, data[1].lon];
+				        //console.log(latlng);
+			        var city = [];
+				        // var i = 0;
+			        console.log("data.features.length", data.features.length);
+			        console.log("data.features", data.features);
+			        	
+					// for(var i= 0; i < data.features.length; i++){
+		    		$.each(data.features,function(i,v){
+
+			    		// console.log("data365 features :", v.properties.name);
+				        	// console.log("v.features[i]", data.features.length);
+			        	console.log("v[i].properties", v);
+			          	city.push({
+		      				'value': v.properties.name+", "+v.properties.postcode,
+		      				'street' : v.properties.street,
+		      				'houseNumber' : v.properties.housenumber,
+		      				'latitude' : v.geometry.coordinates[1],
+		      				'longitude' : v.geometry.coordinates[0],
+		      				// 'country': v.properties.context
+		  				});
+		  				$('#spin2').hide();
+					});
+				    console.log("city2 :",city);
+					buildautoComplete2(city);
+				 	$("#street").focus();
+					$("#ConfirmAdress2").click(function(){
+						for(var i = 0; i < city.length; i++){
+							// console.log("city.length", city.length);
+					 		console.log("cityy", city[i].value);
+					 		console.log("street.val : ", $("#street").val());
+					 		if ($("#street").val() == city[i].value) {
+					 			// alert(city[i].value);
+					 			$("#streetAdress").attr('value', city[i].street);
+								$("#houseNumber").attr('value', city[i].houseNumber);
+								$("#latitude").attr('value', city[i].latitude);
+								$("#longitude").attr('value', city[i].longitude);
+								alert("L'adresse est valide");
+								$("#ConfirmAdress2").hide();
+					 		}
+						};
+					});
+		    	});
+		    }
+		    else
+		    {
+		    	$.getJSON(geocode, function(data) {
+			        // get lat + lon from first match
+			        //var latlng = [data[1].lat, data[1].lon];
+			        //console.log(latlng);
+			        var city = [];
+			        // var i = 0;
+			        console.log("data.features.length", data.length);
+			        console.log("data", data);
+			        	
+					// for(var i= 0; i < data.length; i++){
+		    		$.each(data,function(i,v){
+
+
+			    		// console.log("data365 features :", v.properties.name);
+			        	console.log("data[i]", data[i]);
+			        	console.log("v[i].address", v.address);
+			          	city.push({
+		      				'value': v.address.house_number+" "+v.address.road+", "+v.address.postcode,
+		      				'street' : v.address.road,
+		      				'houseNumber' : v.address.house_number,
+		      				'latitude' :v.lat,
+		      				'longitude' :v.lon,
+		      				// 'country': v.properties.context
+		  				});
+		  				$('#spin2').hide();
+					});
+			    	// };
+				    console.log("city2 :",city);
+					buildautoComplete2(city);
+				 	$("#street").focus();
+					$("#ConfirmAdress2").click(function(){
+						for(var i = 0; i < city.length; i++){
+							// console.log("city.length", city.length);
+					 		console.log("cityy", city[i].value);
+					 		console.log("street.val : ", $("#street").val());
+					 		if ($("#street").val() == city[i].value) {
+					 			// alert(city[i].value);
+					 			$("#streetAdress").attr('value', city[i].street);
+								$("#houseNumber").attr('value', city[i].houseNumber);
+								$("#latitude").attr('value', city[i].latitude);
+								$("#longitude").attr('value', city[i].longitude);
+								alert("L'adresse est valide");
+								$("#ConfirmAdress2").hide();
+					 		}
+						};
+					});
+		    	});
+		    }
+		});
+
+		$( "#street" ).keypress(function( event ) {
+			if ( event.which == 13 ) {
+			    var location = $("#street").val();
+			    $('#spin2').show();
+			    console.log(location);
+			    var geocode = 'https://nominatim.openstreetmap.org/search.php?format=json&q=' + location+'&addressdetails=1';
+			    var geocode2 = 'http://api-adresse.data.gouv.fr/search/?q='+location;
+
+			    // lon:55.4399386
+			    // lat:-21.2645981
+
+			    if ($("#countryCode").val() == "FR"||"RE"||"GP"||"GF"||"MQ"||"YT"||"NC"||"PM") {
+			    	// alert($("#countryCode").val());
+			    
+				    $.getJSON(geocode2, function(data) {
+				        // get lat + lon from first match
+				        //var latlng = [data[1].lat, data[1].lon];
+				        //console.log(latlng);
+				        var city = [];
+				        // var i = 0;
+				        console.log("data.features.length", data.features.length);
+				        console.log("data.features", data.features);
+				        	
+						// for(var i= 0; i < data.features.length; i++){
+			    		$.each(data.features,function(i,v){
+
+				    		// console.log("data365 features :", v.properties.name);
+					        	// console.log("v.features[i]", data.features.length);
+				        	console.log("v[i].properties", v);
+				          	city.push({
+		          				'value': v.properties.name+", "+v.properties.postcode,
+		          				'street' : v.properties.street,
+		          				'houseNumber' : v.properties.housenumber,
+		          				'latitude' : v.geometry.coordinates[1],
+		          				'longitude' : v.geometry.coordinates[0],
+		          				// 'country': v.properties.context
+		      				});
+		      				$('#spin2').hide();
+						});
+					    console.log("city2 :",city);
+						buildautoComplete2(city);
+					 	$("#street").focus();
+						$("#ConfirmAdress2").click(function(){
+							for(var i = 0; i < city.length; i++){
+								// console.log("city.length", city.length);
+						 		console.log("cityy", city[i].value);
+						 		console.log("street.val : ", $("#street").val());
+						 		if ($("#street").val() == city[i].value) {
+						 			// alert(city[i].value);
+						 			$("#streetAdress").attr('value', city[i].street);
+									$("#houseNumber").attr('value', city[i].houseNumber);
+									$("#latitude").attr('value', city[i].latitude);
+									$("#longitude").attr('value', city[i].longitude);
+									alert("L'adresse est valide");
+									$("#ConfirmAdress2").hide();
+						 		}
+							};
+						});
+			    	});
+			    }
+			    else
+			    {
+			    	$.getJSON(geocode, function(data) {
+				        // get lat + lon from first match
+				        //var latlng = [data[1].lat, data[1].lon];
+				        //console.log(latlng);
+				        var city = [];
+				        // var i = 0;
+				        console.log("data.features.length", data.length);
+				        console.log("data", data);
+				        	
+						// for(var i= 0; i < data.length; i++){
+				    		$.each(data,function(i,v){
+
+
+					    		// console.log("data365 features :", v.properties.name);
+					        	console.log("data[i]", data[i]);
+					        	console.log("v[i].address", v.address);
+					          	city.push({
+			          				'value': v.address.house_number+" "+v.address.road+", "+v.address.postcode,
+			          				'street' : v.address.road,
+			          				'houseNumber' : v.address.house_number,
+			          				'latitude' :v.lat,
+			          				'longitude' :v.lon,
+			          				// 'country': v.properties.context
+			      				});
+			      				$('#spin2').hide();
+							});
+				    	// };
+					    console.log("city2 :",city);
+						buildautoComplete2(city);
+					 	$("#street").focus();
+						$("#ConfirmAdress2").click(function(){
+							for(var i = 0; i < city.length; i++){
+								// console.log("city.length", city.length);
+						 		console.log("cityy", city[i].value);
+						 		console.log("street.val : ", $("#street").val());
+						 		if ($("#street").val() == city[i].value) {
+						 			// alert(city[i].value);
+						 			$("#streetAdress").attr('value', city[i].street);
+									$("#houseNumber").attr('value', city[i].houseNumber);
+									$("#latitude").attr('value', city[i].latitude);
+									$("#longitude").attr('value', city[i].longitude);
+									alert("L'adresse est valide");
+									$("#ConfirmAdress2").hide();
+						 		}
+							};
+						});
+			    	});
+			    }
+		   	}
+		});
+	
+});
+  
   /*****************													************************
 		**************		FIN DE LA PARTIE RECHERCHE D'ADRESSE		************************
 	******************													***********************/
@@ -691,38 +1035,22 @@ function getInfoTabs(){
 
 function autoComplete(city){
 
-	console.log(city);
+	console.log("autocomplete city",city);
 	  $( "#tags" ).autocomplete({
   		source: city
 		 });
 }
 
-function buildautoComplete(city) {
+function buildautoComplete(city,) {
 
    //$( ".adress" ).autocomplete( "option", "classes.ui-autocomplete", "highlight" );
    //alert('test');
   $("#adress").autocomplete({ 
     source: city,
     select : function(event, ui){ // lors de la sélection d'une proposition
-        
-        if(typeof ui.item.postcode!= "undefined"){
-        	$("#postcode").html(ui.item.postcode);
-        }else{
-        	$("#postcode").html("");
-        }
-        if(typeof ui.item.city!= "undefined"){
-        	$("#city").html(ui.item.city);
-        }else{
-        	$("#city").html("");
-        }
-        if(typeof ui.item.country!= "undefined"){
-        	$("#country").html(ui.item.country);
-        }else{
-        	$("#country").html("");
-        }
-        //$("#city").html(ui.item.city);
-        //$("#country").html(ui.item.country);
-        //console.log( ui.item.postcode ); // on ajoute la description de l'objet dans un bloc
+    	// $("#postcode").attr("value", city.postcode);
+    	// $("#city").attr("value", city);
+    	// $("#country").attr("value", country);
     },
     minLength: 0
     }).on("focus", function () {
@@ -730,4 +1058,19 @@ function buildautoComplete(city) {
     });
 
   };
+
+  function buildautoComplete2(city,) {
+	  $("#street").autocomplete({ 
+	    source: city,
+	    select : function(event, ui){ // lors de la sélection d'une proposition
+	    	// $("#postcode").attr("value", city.postcode);
+	    	// $("#city").attr("value", city);
+	    	// $("#country").attr("value", country);
+	    },
+	    minLength: 0
+	    }).on("focus", function () {
+	    $(this).autocomplete("search", '');
+    	});
+	};
+
 

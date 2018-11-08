@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	verifInfo();
 	//test();
-	chrome.tabs.onSelectionChanged.addListener(verifRss);
+	chrome.tabs.onSelectionChanged.onActivated(verifRss);
 
 	function verifRss(){
 		var gettingActiveTab = chrome.tabs.query(
