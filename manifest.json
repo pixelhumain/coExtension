@@ -1,0 +1,35 @@
+{
+
+  "manifest_version": 2,
+  "name": "CoExtension",
+  "version": "0.1",
+
+  "content_security_policy": "script-src 'self' https://code.jquery.com/ui/1.12.1/jquery-ui.js; object-src 'self'",
+
+  "description": "Le premier addon Communecter",
+
+  "icons": {
+    "48": "icons/logo-min.png"
+  },
+
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "activeTab",
+    "tabs",
+    "<all_urls>",
+    "notifications"
+
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/logo-min.png",
+    
+    "default_title": "CoExtension",
+    "default_popup": "popup/accueil.html"
+  },
+
+  "background": {
+    "scripts": ["jquery-3.2.1.min.js", "background.js"]
+  }
+}

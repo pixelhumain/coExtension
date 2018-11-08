@@ -1,0 +1,90 @@
+.qq-gallery.qq-uploader:before {
+    content: attr(qq-drop-area-text) " ";
+    position: absolute;
+    font-size: 200%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    top: 45%;
+    opacity: 0.25;
+}
+
+.hide {
+  display : none !important;
+}
+
+
+.letter-red {
+    color: #ea4335!important;
+}
+
+.btn.w100p {
+	left: 50% !important;
+    width: 100%!important;
+    background-color: #ccc !important;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #2C3E50 !important;
+    border-color: #2C3E50 !important;
+    font-weight: 700 !important;
+}
+
+.text-red, a.text-red {
+    color: #e6344d !important;
+}
+
+.letter-green {
+    color: #34a853 !important;
+}
+
+.btn-default {
+    background-color: #fff !important;
+    border-color: #ccc !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-field {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.select2-container-multi .select2-choices li {
+    float: left;
+    list-style: none;
+}
+#ajax-modal .select2-container-multi {
+    border: 0px!important;
+}
+.select2-container {
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    zoom: 1;
+    vertical-align: middle;
+}
+
+.select2-search-field, .select2-input {
+    width: 105% !important;
+    font-size: 14px !important;
+    padding: 0px !important;
+    margin-left: -20px !important;
+}
+
+.qq-gallery.qq-uploader {
+    position: relative;
+    min-height: 200px;
+    max-height: 490px;
+    overflow-y: hidden;
+    width: inherit;
+    border-radius: 6px;
+    border: 1px dashed #CCCCCC;
+    background-color: #FAFAFA;
+    padding: 20px;
+}
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin:0;
+}
